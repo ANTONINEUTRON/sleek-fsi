@@ -1,14 +1,29 @@
 import logo from './logo.svg';
 import './App.css';
+import {
+  BrowserRouter,
+  Routes,
+  Route
+} from "react-router-dom";
+import Dashboard from './pages/Dashboard';
+import Login from './pages/Login';
+import PageNotFound from './pages/PageNotFound';
+import Performance from './components/Performance';
+import AddRecord from './components/AddRecord';
 
 function App() {
   return (
-    <div className="App">
-      <div className='text-5xl bg-blue-700 text-white'>
-        WELCOME START DESIGNING
-
-      </div>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Dashboard />}>
+          <Route path="performance" element={<Performance/>}/>
+          <Route path="add-record" element={<AddRecord/>}/>
+          
+        </Route>
+        <Route path="/login" element={<Login />}/>
+        <Route path="*" element={<PageNotFound />}/>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
