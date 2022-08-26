@@ -11,6 +11,8 @@ import PageNotFound from './pages/PageNotFound';
 import Performance from './components/Performance';
 import AddRecord from './components/AddRecord';
 import RecoverCredentials from './pages/RecoverCredentials';
+import Record from './components/Record';
+import RecordDetails from './components/RecordDetails';
 
 function App() {
   return (
@@ -19,7 +21,8 @@ function App() {
         <Route path="/" element={<Dashboard />}>
           <Route path="performance" element={<Performance/>}/>
           <Route path="add-record" element={<AddRecord/>}/>
-          
+          <Route path="records" element={<Record />} />
+          <Route path="record-details" element={<RecordDetails />} />
         </Route>
         <Route path="/login" element={<Login />}/>
         <Route path="/recover-credentials" element={<RecoverCredentials />} />

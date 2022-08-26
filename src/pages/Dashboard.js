@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import { Outlet,Link, useNavigate } from "react-router-dom";
 import AddRecord from "../components/AddRecord";
 import { useEffect, useState } from "react";
+import Record from "../components/Record";
 
 export default function Dashboard(){
     const navigateTo = useNavigate();
@@ -22,7 +23,7 @@ export default function Dashboard(){
         <div>
             {isLogin && (<Navbar />)}
             <Routes>
-                {isLogin && (<Route path="/" element={< AddRecord/>}/>)}
+                {isLogin && (<Route path="/" element={< Record/>}/>)}
             </Routes>
             <Outlet />
         </div>

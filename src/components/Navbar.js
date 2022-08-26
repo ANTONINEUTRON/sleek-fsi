@@ -51,7 +51,7 @@ export default function Navbar(){
             >
                 <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
                 <li className="nav-item hover:text-orange-900">
-                    <Link to={"/add-record"} className="px-3 py-2 flex items-center mx-3 uppercase font-bold leading-snug lg:only:underline">
+                    <Link to={"/records"} className="px-3 py-2 flex items-center mx-3 uppercase font-bold leading-snug lg:only:underline">
                         {/* <FontAwesomeIcon icon={faBookJournalWhills} className="text-xl mr-2"/> */}
                         Records
                     </Link>
