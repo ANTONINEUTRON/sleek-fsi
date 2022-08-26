@@ -10,6 +10,7 @@ import Login from './pages/Login';
 import PageNotFound from './pages/PageNotFound';
 import Performance from './components/Performance';
 import AddRecord from './components/AddRecord';
+import RecoverCredentials from './pages/RecoverCredentials';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           
         </Route>
         <Route path="/login" element={<Login />}/>
+        <Route path="/recover-credentials" element={<RecoverCredentials />} />
         <Route path="*" element={<PageNotFound />}/>
       </Routes>
     </BrowserRouter>
