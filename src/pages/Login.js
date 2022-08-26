@@ -39,6 +39,8 @@ export default function Login(){
             let orgData = ORG_IDS[userName];//an object
             if(pKey === orgData.key){
                 showToast("Successfully Signed In");
+                //save credentials to session
+                sessionStorage.setItem("orgData", JSON.stringify(orgData))
                 //Take to new page
                 setTimeout(() => {
                     navigateTo("/",{replace: true});
