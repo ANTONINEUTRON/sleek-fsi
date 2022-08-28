@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import Profile from "./Profile";
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
-import { addDoc, collection, doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
+import { addDoc, arrayUnion, collection, doc, getDoc, getFirestore, setDoc, updateDoc } from "firebase/firestore";
 import firebaseInstance from "../FirebaseConfig";
 import ShowCreditDetails from "./ShowCreditDetails";
 
@@ -73,6 +73,7 @@ export default function AddRecord(){
                     setInterest((old)=>"");
                     setNote((old)=>"");
                     showToast("Credit Record Has Been Added Successfully");
+                    saveToUserProfile(docRef.id);
                 },
                 (reasonForFailure)=>{
                     console.log(reasonForFailure);
@@ -107,6 +108,13 @@ export default function AddRecord(){
             );
         }
     };
+
+    const saveToUserProfile = (TrnsID)=>{
+        let userRef = doc(db, "/users", bvn);
+        updateDoc(userRef, {
+            transactions: arrayUnion(TrnsID) 
+        })
+    }
 
     const getOrganizationId = ()=>{
         let orgObj = JSON.parse(sessionStorage.getItem("orgData"));
@@ -160,9 +168,9 @@ export default function AddRecord(){
             {userDetails && (
                 <div className="m-5 bg-gray-50 rounded-lg p-3 shadow-xl flex flex-col mt-5">
                     {tranxId && (
-                        <div className="text-2xl text-indigo-900 font-semibold font-mono">
+                        <div className="text-2xl text-indigo-900 font-semibold font-mono text-center items-center">
                             {tranxId}
-                            <sub className="text-sm text-black"> (will disappear in 30 mins)</sub>
+                            <sub className="text-sm text-black"> (for the last recorded credit)</sub>
                         </div>
                     )}
                     <div className="flex flex-row pl-5 mb-5">

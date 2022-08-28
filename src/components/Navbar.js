@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import icon from "./../logo/nav_logo.png"
 
 export default function Navbar(){
     const [navbarOpen, setNavbarOpen] = useState(false);
@@ -26,13 +27,14 @@ export default function Navbar(){
 
     return (
         <>
-        <nav className="relative flex flex-wrap items-center fixed-top static-top justify-between px-2 py-3 bg-indigo-100 text-black mb-3">
+        <nav className="relative flex flex-wrap items-center fixed-top shadow-md static-top justify-between px-2 py-3 bg-green-50 opacity-80 text-black mb-3">
             <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
             <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
                 <Link
-                className="text-2xl font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-green-700"
+                className="text-2xl font-bold leading-relaxed inline-block flex mr-4 py-2 whitespace-nowrap uppercase text-green-700"
                 to={"/"}
                 >
+                    <img src={icon} alt="icon" className="mr-3" width="120" height="100" />
                     {orgName}
                 </Link>
                 <button

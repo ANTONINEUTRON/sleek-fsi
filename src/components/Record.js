@@ -1,13 +1,14 @@
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
 
 export default function Record(){
     const [bvn, setBvn] = useState("");
+    const navigateTo = useNavigate()
 
     const fetchRecord = (event)=>{
        // postNibssEndpoint();//Ping FSI server
@@ -17,6 +18,7 @@ export default function Record(){
         }else{
             showToast("Loading BVN Details");
             //Navigate to BVN Details page
+            navigateTo("/record-details", {state: {dBvn: bvn}});
         }
     }
 

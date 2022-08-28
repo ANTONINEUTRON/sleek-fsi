@@ -17,12 +17,16 @@ export default function ShowCreditDetails({transId, setIsCreditByOrg, showToast,
                             if(docSnap.exists()){
                                 console.log()
                                 let tranxData = docSnap.data();
-                                let organizationId = orgId();
-                                if(tranxData.orgId === organizationId){
-                                    setIsCreditByOrg(true);
-                                    setTransData(docSnap.data());
+                                if(orgId){
+                                    let organizationId = orgId();
+                                    if(tranxData.orgId === organizationId){
+                                        setIsCreditByOrg(true);
+                                        setTransData(docSnap.data());
+                                    }else{
+                                        setIsCreditByOrg(false);
+                                    }
                                 }else{
-                                    setIsCreditByOrg(false);
+                                    setTransData(docSnap.data())
                                 }
                             }else {
                                 // doc.data() will be undefined in this case
@@ -62,29 +66,35 @@ export default function ShowCreditDetails({transId, setIsCreditByOrg, showToast,
                     </div>
                     <div className="flex flex-col m-4">
                         <span className="text-2xl text-green-900 mb-2">Repayments</span>
-                        <table className="table-auto">
-                            <thead>
-                                <tr className="border">
-                                    <th className="border">Date</th>
-                                    <th className="border">Amount</th>
-                                    <th className="border">Note</th>
-                                </tr>
-                            </thead>
-                            <tbody className="border">
-                            {transData.repaymentHistory.map(
-                                (item, index)=>(
-                                    <tr>
-                                        {/* The Date */}
-                                        <td className="border">{getDateFromTimestamp(Object.keys(item)[0])}</td>
-                                        {/* The Amount  */}
-                                        <td className="border">{parseInt(item[Object.keys(item)[0]].amount).toLocaleString('en-US')}</td>
-                                        {/* The Note of repayment */}
-                                        <td className="border">{item[Object.keys(item)[0]].note}</td>
+                        {(transData.repaymentHistory.length > 0) ? (
+                            <table className="table-auto">
+                                <thead>
+                                    <tr className="border">
+                                        <th className="border">Date</th>
+                                        <th className="border">Amount</th>
+                                        <th className="border">Note</th>
                                     </tr>
-                                )
-                            )}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody className="border">
+                                {transData.repaymentHistory.map(
+                                    (item, index)=>(
+                                        <tr>
+                                            {/* The Date */}
+                                            <td className="border">{getDateFromTimestamp(Object.keys(item)[0])}</td>
+                                            {/* The Amount  */}
+                                            <td className="border">{parseInt(item[Object.keys(item)[0]].amount).toLocaleString('en-US')}</td>
+                                            {/* The Note of repayment */}
+                                            <td className="border">{item[Object.keys(item)[0]].note}</td>
+                                        </tr>
+                                    )
+                                )}
+                                </tbody>
+                            </table>
+                        ) : (
+                            <div>
+                                No Repayment Has Been Made For This Credit
+                            </div>
+                        )}
                     </div>
                 </div>
             )}

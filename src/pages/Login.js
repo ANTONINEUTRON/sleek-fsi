@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import firebaseInstance from "../FirebaseConfig";
+import logo from "./../logo/logo.png"
 
 const ORG_IDS = {
     "aaKnXYBBN123gGh":{
@@ -92,8 +93,8 @@ export default function Login(){
                 draggable
                 pauseOnHover
             />
-            <div className="flex flex-col items-center">
-                SafeA Logo
+            <div className="flex flex-col items-center mb-5">
+                <img src={logo} alt="SafeA Logo"  width="150"/>
             </div>
             <div className="flex flex-col p-auto text-5xl text-green-800 text-center">
                 Login
