@@ -3,8 +3,9 @@ import { useRef, useState } from "react";
 import Profile from "./Profile";
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
-import { addDoc, collection, getFirestore } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
 import firebaseInstance from "../FirebaseConfig";
+import ShowCreditDetails from "./ShowCreditDetails";
 
 const emptyCreditObject = {
     amount : 0,
@@ -26,6 +27,15 @@ export default function AddRecord(){
     const [actionType, setActionType] = useState("new_credit");
     const [showProfile, setSP] = useState(false);
     const [creditObj, setCreditObj] = useState(emptyCreditObject);
+    const [tranxId, setTranxId] = useState("");
+    const [shouldShowCreditDetails, setShouldShowCD] = useState(false);
+    const [isCreditByOrg, setIsCreditByOrg] = useState()
+
+    //Repayment section
+    const [rTransId,setRTransId] = useState();
+    const [rAmt, setRAmt] = useState();
+    const [rNote, setRNote] = useState();
+    const [transData, setTransData] = useState();//will be passed to ShowCreditDetails
 
     const db = getFirestore(firebaseInstance);
 
@@ -57,6 +67,7 @@ export default function AddRecord(){
             //save to db
             addDoc(collection(db, "/credits_tranx"), creditObj).then(
                 (docRef)=>{
+                    setTranxId(docRef.id);
                     setAmount((old)=>"");
                     setTerm((old)=>"");
                     setInterest((old)=>"");
@@ -72,7 +83,29 @@ export default function AddRecord(){
     };
 
     const addRepaymentRecord = ()=>{
-
+        if(rAmt < 1){
+            showToast("You should enter a valid amount");
+        }else{
+            //update repayment object
+            let currTime = Date.now().toString();
+            let repaymentObject = {};
+            repaymentObject[currTime] = {
+                amount : rAmt,
+                note : rNote
+            }
+            //insert into list of transaction object
+            transData.repaymentHistory.push(repaymentObject);
+            setDoc(doc(db, "/credits_tranx",rTransId), transData).then(
+                ()=>{
+                    setRAmt("");
+                    setRNote("");
+                    showToast("Repayment Has Been Inserted Successfully");
+                },
+                (err)=>{
+                    showToast("Something went wrong - "+err)
+                }
+            );
+        }
     };
 
     const getOrganizationId = ()=>{
@@ -105,9 +138,9 @@ export default function AddRecord(){
                 draggable
                 pauseOnHover
                 />
+            <div className="text-3xl font-semibold text-green-800 mb-5">Add Credit Record</div>
             <div className="w-full items-center flex flex-col">
-                <div className="text-lg mr-6 font-semibold">Enter the BVN of the user</div>
-                <input type={"number"} value={bvn} onChange={(e)=> {setBvn((oldV)=>e.target.value); setSP(false)}} name="bvn"  
+                <input type={"number"} value={bvn} onChange={(e)=> {setBvn((oldV)=>e.target.value); setSP(false); setUserDetails()}} name="bvn"  
                     className="border border-orange-300  bg-gray-300 h-12 m-3 mr-8 ml-8 p-2 w-72 hover:bg-gray-200" placeholder="Enter BVN"/>
                 <button onClick={(e)=>{fetchBVNDetails()}}
                     className="font-bold text-lg text-white bg-green-900 p-3 rounded-lg hover:bg-green-700">
@@ -126,6 +159,12 @@ export default function AddRecord(){
             </div>
             {userDetails && (
                 <div className="m-5 bg-gray-50 rounded-lg p-3 shadow-xl flex flex-col mt-5">
+                    {tranxId && (
+                        <div className="text-2xl text-indigo-900 font-semibold font-mono">
+                            {tranxId}
+                            <sub className="text-sm text-black"> (will disappear in 30 mins)</sub>
+                        </div>
+                    )}
                     <div className="flex flex-row pl-5 mb-5">
                         {/* <label className="text-xl pt-2">Type of Record:</label> */}
                         <select value={actionType} onChange={(e)=> setActionType((oldVal)=>e.target.value)}
@@ -150,9 +189,28 @@ export default function AddRecord(){
                         </div>
                     ):(
                         <div className="flex flex-col">
-                            <input type={"text"} placeholder="Transaction ID" className="border border-orange-300  bg-gray-100 h-12 m-3  p-3"/>
-                            <input type={"number"} placeholder="Amount" className="border border-orange-300  bg-gray-100 h-12 m-3  p-3"/>
-                            <textarea rows={5} placeholder="Note" className="border border-orange-300  bg-gray-100 m-2  p-3"/>
+                            <input type={"text"} value={rTransId} onChange={(e)=>setRTransId(e.target.value)} onBlur={(e)=>setShouldShowCD(true)}
+                                placeholder="Transaction ID" className="border border-orange-300  bg-gray-100 h-12 m-3  p-3"/>
+
+                            {shouldShowCreditDetails && (
+                                <ShowCreditDetails
+                                    transId={rTransId}
+                                    setIsCreditByOrg={setIsCreditByOrg}
+                                    orgId={getOrganizationId}
+                                    showToast={showToast}
+                                    transData={transData}
+                                    setTransData={setTransData}
+                                    setShouldShowCD={setShouldShowCD}
+                                    />
+                            )}
+                            {(isCreditByOrg === false) && (
+                                <div className="text">The Credit ID You entered is not signed by your organization. Therefore you are not authorized to edit it</div>
+                            )}
+
+                            <input type={"number"} value={rAmt} onChange={(e)=>setRAmt(e.target.value)}
+                                placeholder="Amount" className="border border-orange-300  bg-gray-100 h-12 m-3  p-3"/>
+                            <textarea rows={5} value={rNote} onChange={(e)=>setRNote(e.target.value)} 
+                                placeholder="Note" className="border border-orange-300  bg-gray-100 m-2  p-3"/>
                             <button onClick={(e)=>{addRepaymentRecord()}} className="bg-green-900 text-white hover:bg-green-700 h-12 m-5 rounded-lg text-lg">
                                 Submit Record
                             </button>

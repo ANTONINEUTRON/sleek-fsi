@@ -23,9 +23,7 @@ export default function Profile({userDetails, setUserDetails, bvn, showToast}){
                             }
                         },
                         (reasonForReject)=>{
-                            console.log("Reject ", reasonForReject)
-                            
-                            showToast("No Details For BVN was Found");
+                            showToast("Error: "+ reasonForReject);
                             setUserDetails();
                         }
                     );
@@ -57,7 +55,7 @@ export default function Profile({userDetails, setUserDetails, bvn, showToast}){
                             <b>Middle Name: </b>{userDetails.MiddleName}
                         </span>
                         <span className="mr-3">
-                            <b>DOB: </b>{userDetails.DOB}
+                            <b>DOB: </b>{userDetails.DateOfBirth}
                         </span>
                     </div>
                     <div className="flex flex-row m-3 justify-between w-full">
@@ -85,7 +83,7 @@ export default function Profile({userDetails, setUserDetails, bvn, showToast}){
                             <b>Account Level: </b>{userDetails.LevelOfAccount}
                         </span> */}
                         <span className="mr-3">
-                            <b>Income (per Month): </b>{userDetails.income.toLocaleString('en-US')}
+                            <b>Income (per Month): </b>{userDetails.income.toLocaleString('en-US')} NGN
                         </span>
                         <span className="mr-3 text-xl text-green-900">
                             <b>Credit Score: </b>{userDetails.CreditScore}

@@ -9,16 +9,16 @@ export default function Dashboard(){
     const navigateTo = useNavigate();
     const [isLogin, setIsLogin] = useState(true);
 
-    // useEffect(
-    //     ()=>{
-    //         let orgData = JSON.parse(sessionStorage.getItem("orgData"));
-    //         if(!orgData){//if null is returned
-    //             setTimeout(() => {
-    //                 navigateTo("/login",{replace: true});
-    //             }, 1000);
-    //         }
-    //     }, []
-    // );
+    useEffect(
+        ()=>{
+            let orgData = JSON.parse(sessionStorage.getItem("orgData"));
+            if(!orgData){//if null is returned
+                setTimeout(() => {
+                    navigateTo("/login",{replace: true});
+                }, 1000);
+            }
+        }, []
+    );
     return (
         <div>
             {isLogin && (<Navbar />)}
