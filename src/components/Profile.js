@@ -15,7 +15,6 @@ export default function Profile({userDetails, setUserDetails, bvn, showToast}){
                     .then(
                         (docSnap)=>{
                             if (docSnap.exists()) {
-                                console.log("Document data:", docSnap.data());
                                 setUserDetails((oldVal)=>docSnap.data());
                             } else {
                                 // doc.data() will be undefined in this case

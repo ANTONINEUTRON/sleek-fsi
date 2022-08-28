@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import { doc, getDoc, getFirestore } from "firebase/firestore";
+import firebaseInstance from "../FirebaseConfig";
 
 const ORG_IDS = {
     "aaKnXYBBN123gGh":{
@@ -22,6 +24,8 @@ export default function Login(){
     const [pKey, setPKey] = useState("");
     const navigateTo = useNavigate();
 
+    const db = getFirestore(firebaseInstance);
+
     const processSubmit = (event)=>{
         event.preventDefault();
         if(!userName){//if username is empty
@@ -33,23 +37,33 @@ export default function Login(){
             return;
         }
 
-        //check credentials
-        let keysArr = Object.keys(ORG_IDS);
-        if(keysArr.includes(userName)){
-            let orgData = ORG_IDS[userName];//an object
-            if(pKey === orgData.key){
-                showToast("Successfully Signed In");
-                //save credentials to session
-                sessionStorage.setItem("orgData", JSON.stringify(orgData))
-                //Take to new page
-                setTimeout(() => {
-                    navigateTo("/",{replace: true});
-                }, 1000);
-            }else{
-                showToast("Wrong Private Key Was Entered");
-            }
-        }else{
-            showToast("Wrong credentials was Entered");
+        try {
+            //fetch credentials from FB
+            getDoc(doc(db, "/orgs",userName))
+                .then(
+                    (docSnap)=>{
+                        if (docSnap.exists()) {
+                            let orgData = docSnap.data();//an object
+                            orgData.id = docSnap.id;
+                            if(pKey === orgData.key){
+                                showToast("Successfully Signed In");
+                                //save credentials to session
+                                sessionStorage.setItem("orgData", JSON.stringify(orgData))
+                                //Take to new page
+                                setTimeout(() => {
+                                    navigateTo("/",{replace: true});
+                                }, 1000);
+                            }else{
+                                showToast("Wrong Private Key Was Entered");
+                            }
+                        } else {
+                            // doc.data() will be undefined in this case
+                            showToast("No Details For The BVN was Found");
+                        }
+                    }
+                );
+        } catch (error) {
+            showToast("Something went wrong. Ensure you enter the correct credentials and try again");            
         }
     }
 
