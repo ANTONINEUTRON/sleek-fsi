@@ -36,9 +36,12 @@ export default function RowsOfTransaction({listOfTransactions, showToast}){
                                     objToInsert.note = d.note;
 
                                     setLOTD((oldVal)=>[...oldVal, objToInsert]);
+                                    console.log("dat ret ", docSnap.data());
 
                                     //loop through repayment history and add
-                                    for (var item in objToInsert.repaymentHistory) {
+                                    for (var i = 0; i < d.repaymentHistory.length; i++) {
+                                        var item = d.repaymentHistory[i];
+                                        console.log(item);
                                         let rObj = {};
                                         //get date
                                         rObj.date = getDateFromTimestamp(Object.keys(item)[0])

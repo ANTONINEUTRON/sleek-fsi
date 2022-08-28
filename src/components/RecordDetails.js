@@ -42,7 +42,7 @@ export default function RecordDetails(){
                 <button className="mr-3">
                     <FontAwesomeIcon icon={faArrowLeft} />
                 </button>
-                Bvn Number
+                {userBvn}
             </Link>
             <div className="bg-white rounded-md m-8 p-5">
                 <Profile 
@@ -67,9 +67,9 @@ export default function RecordDetails(){
                                 <th className="border">Amount</th>
                                 <th className="border">Note</th>
                             </tr>
-                            <RowsOfTransaction 
+                            {userDetails && (<RowsOfTransaction 
                                 listOfTransactions={userDetails.transactions}
-                                />
+                                />)}
                         </table>
                     )}
                     

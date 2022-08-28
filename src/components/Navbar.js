@@ -31,7 +31,7 @@ export default function Navbar(){
             <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
             <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
                 <Link
-                className="text-2xl font-bold leading-relaxed inline-block flex mr-4 py-2 whitespace-nowrap uppercase text-green-700"
+                className="text-2xl font-bold leading-relaxed flex mr-4 py-2 whitespace-nowrap uppercase text-green-700"
                 to={"/"}
                 >
                     <img src={icon} alt="icon" className="mr-3" width="120" height="100" />

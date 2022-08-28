@@ -40,8 +40,8 @@ export default function Profile({userDetails, setUserDetails, bvn, showToast}){
         <div>
             {userDetails && (
                 <div className="flex flex-row">
-                <div className="w-36 h-36 ml-5 mr-8 mb-5">
-                    Image To Be Shown
+                <div className="w-56 h-56 ml-5 mr-8 mb-5">
+                    <img src={userDetails.image}  alt="dp" />
                 </div>
                 <div className="flex flex-col w-full">
                     <div className="flex flex-row m-5 justify-between w-full">
