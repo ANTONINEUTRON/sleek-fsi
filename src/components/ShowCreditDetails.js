@@ -11,7 +11,8 @@ export default function ShowCreditDetails({transId, setIsCreditByOrg, showToast,
         ()=>{
             if(isFirstRun.current){
                 isFirstRun.current = false;
-                getDoc(doc(db, "/credits_tranx",transId))
+                try {
+                    getDoc(doc(db, "credits_tranx",transId))
                     .then(
                         (docSnap)=>{
                             if(docSnap.exists()){
@@ -39,6 +40,9 @@ export default function ShowCreditDetails({transId, setIsCreditByOrg, showToast,
                             console.log("Couldn't get transaction details: ")
                         }
                     );
+                } catch (error) {
+                    console.log(transId+"ERROR OCCURED ",error);
+                }
             }
         },
         []
@@ -59,14 +63,14 @@ export default function ShowCreditDetails({transId, setIsCreditByOrg, showToast,
                 'Content-Type': 'application/json',
                 'Sandbox-key': '2I7a8CP4M1wkdU1F9eUS7zsmi98mfDaS1661538618'
             },
-            body: {
+            body: JSON.stringify({
                 "username" : "Safe A",
                 "to" : "+2348120534617",
                 "message": "Your Account Was Accessed By FaiirMoney"
-            } 
+            })
         }).then(
             (response)=>{
-                showToast("User Notified!");
+                // showToast("User Notified!");
             },
             (err)=>{
                 console.log("Error Ocured ", err);

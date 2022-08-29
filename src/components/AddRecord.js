@@ -100,7 +100,7 @@ export default function AddRecord(){
                 ()=>{
                     setRAmt("");
                     setRNote("");
-                    showToast("Repayment Has Been Inserted Successfully");
+                    showToast("Repayment Has Been Added Successfully");
                 },
                 (err)=>{
                     showToast("Something went wrong - "+err)
@@ -197,7 +197,7 @@ export default function AddRecord(){
                         </div>
                     ):(
                         <div className="flex flex-col">
-                            <input type={"text"} value={rTransId} onChange={(e)=>setRTransId(e.target.value)} onBlur={(e)=>setShouldShowCD(true)}
+                            <input type={"text"} value={rTransId} onChange={(e)=>{setRTransId(e.target.value); setShouldShowCD(false);}} onBlur={(e)=>setShouldShowCD(true)}
                                 placeholder="Transaction ID" className="border border-orange-300  bg-gray-100 h-12 m-3  p-3"/>
 
                             {shouldShowCreditDetails && (

@@ -97,7 +97,7 @@ export default function Login(){
             <div className="flex flex-col p-auto text-4xl text-green-800 text-center">
                 Login
             </div>
-            <div className="flex flex-col text-2xl text-center">
+            <div className="flex flex-col text-xl text-center">
                 Sign in to the Organization's Node
             </div>
             <div className="flex flex-col mt-4">
