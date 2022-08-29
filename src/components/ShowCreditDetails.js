@@ -22,6 +22,7 @@ export default function ShowCreditDetails({transId, setIsCreditByOrg, showToast,
                                     if(tranxData.orgId === organizationId){
                                         setIsCreditByOrg(true);
                                         setTransData(docSnap.data());
+                                        sendSms()
                                     }else{
                                         setIsCreditByOrg(false);
                                     }
@@ -46,7 +47,34 @@ export default function ShowCreditDetails({transId, setIsCreditByOrg, showToast,
     const getDateFromTimestamp = (timeStamp)=>{
         let date = new Date(parseInt(timeStamp));
         return date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear();
+        sendSms()
     }
+
+    
+    const sendSms = ()=>{
+        fetch('https://fsi.ng/api/v1/africastalking/version1/messaging',{
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Sandbox-key': '2I7a8CP4M1wkdU1F9eUS7zsmi98mfDaS1661538618'
+            },
+            body: {
+                "username" : "Safe A",
+                "to" : "+2348120534617",
+                "message": "Your Account Was Accessed By FaiirMoney"
+            } 
+        }).then(
+            (response)=>{
+                showToast("User Notified!");
+            },
+            (err)=>{
+                console.log("Error Ocured ", err);
+            }
+        )
+    }
+    
+
 
     return (
         <div>

@@ -7,18 +7,16 @@ import { doc, getDoc, getFirestore } from "firebase/firestore";
 import firebaseInstance from "../FirebaseConfig";
 import logo from "./../logo/logo.png"
 
-const ORG_IDS = {
-    "aaKnXYBBN123gGh":{
-        name: "Fairmoney",
-        address: "Kimba crescent",
-        key: "Axcv45478JSNNJujwj778"
-    },
-    "HhhtyUkIllBnvdjd":{
-        name: "Akcess Bank",
-        address: "Konleen crescent",
-        key: "KKALkska8892JjHHahnn77V"
-    }
-};
+
+    // "aaKnXYBBN123gGh":{
+    //     name: "Fairmoney",
+    //     address: "Kimba crescent",
+    //     key: "Axcv45478JSNNJujwj778"
+    // },
+    // "HhhtyUkIllBnvdjd":
+    //     name: "Akcess Bank",
+    //     address: "Konleen crescent",
+    //     key: "KKALkska8892JjHHahnn77V"
 
 export default function Login(){
     const [userName, setUsername] = useState("");
@@ -81,7 +79,7 @@ export default function Login(){
     }
 
     return (
-        <div className="ml-48 mr-48 mt-3 pb-40 p-7 pl-10 pr-10 bg-white rounded-md">
+        <div className="md:ml-48 md:mr-48 mt-3 md:pb-40 p-7 md:pl-10 md:pr-10 bg-white rounded-md">
             <ToastContainer
                 position="top-right"
                 autoClose={5000}
@@ -96,7 +94,7 @@ export default function Login(){
             <div className="flex flex-col items-center mb-5">
                 <img src={logo} alt="SafeA Logo"  width="150"/>
             </div>
-            <div className="flex flex-col p-auto text-5xl text-green-800 text-center">
+            <div className="flex flex-col p-auto text-4xl text-green-800 text-center">
                 Login
             </div>
             <div className="flex flex-col text-2xl text-center">
@@ -110,7 +108,7 @@ export default function Login(){
                 <input type={"button"} value="Login" onClick={(e)=>processSubmit(e)}
                 className="bg-green-800 rounded-md ml-10 mr-10 mt-10 font-bold m-auto text-white p-3 hover:bg-green-600"/>
 
-                <Link to={"/recover-credentials"} className="text-green-800 text-xl m-auto mt-6">Recover Credentials</Link>
+                <Link to={"/recover-credentials"} className="text-green-800 hover:text-green-700 text-xl m-auto mt-6">Recover Credentials</Link>
             </div>
         </div>
     );

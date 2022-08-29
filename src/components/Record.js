@@ -11,7 +11,7 @@ export default function Record(){
     const navigateTo = useNavigate()
 
     const fetchRecord = (event)=>{
-       // postNibssEndpoint();//Ping FSI server
+        postNibssEndpoint();//Ping FSI server
 
         if(bvn.length < 9){
             showToast("You entered an invalid BVN")
@@ -41,7 +41,6 @@ export default function Record(){
         );
     }
     
-    
     const showToast = (msg)=>{
         toast(msg, {
             position: "top-right",
@@ -67,7 +66,7 @@ export default function Record(){
                 draggable
                 pauseOnHover
                 />
-            <div className="bg-white flex flex-col w-3/4 p-12 pl-10 pr-10 m-auto rounded-lg mt-10">
+            <div className="bg-white flex flex-col md:w-3/4 p-12 pl-10 pr-10 m-auto rounded-lg mt-10">
                 <input type={"number"} value={bvn} onChange={(e)=> {setBvn((oldV)=>e.target.value)}} name="bvn"  
                     className="border border-orange-300  bg-gray-300 h-12 m-3 mr-8 ml-8 p-2 hover:bg-gray-200" placeholder="Enter BVN"/>
                 <input type={"button"} onClick={(e)=>fetchRecord(e)} value="Fetch Credit History" 

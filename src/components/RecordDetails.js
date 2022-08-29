@@ -26,7 +26,7 @@ export default function RecordDetails(){
     }
 
     return (
-        <div className="p-5">
+        <div className="md:p-5">
             <ToastContainer
                 position="top-right"
                 autoClose={5000}
@@ -44,7 +44,7 @@ export default function RecordDetails(){
                 </button>
                 {userBvn}
             </Link>
-            <div className="bg-white rounded-md m-8 p-5">
+            <div className="bg-white rounded-md md:m-8 md:p-5">
                 <Profile 
                     userDetails={userDetails}
                     setUserDetails={setUserDetails}

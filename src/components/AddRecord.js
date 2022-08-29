@@ -134,7 +134,7 @@ export default function AddRecord(){
     };
 
     return (
-        <div className="m-8 rounded-md bg-white p-10 flex flex-col">
+        <div className="md:m-8 rounded-md bg-white md:p-10 flex flex-col">
             <ToastContainer
                 position="top-right"
                 autoClose={5000}
